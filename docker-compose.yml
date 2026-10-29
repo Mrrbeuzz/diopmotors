@@ -1,0 +1,18 @@
+# PostgreSQL local, sans rien installer d'autre que Docker Desktop :
+#   docker compose up -d
+# Les identifiants ci-dessous correspondent au DATABASE_URL de .env.example.
+services:
+  db:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: diop
+      POSTGRES_PASSWORD: diop
+      POSTGRES_DB: diopmotors
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - diopmotors-db:/var/lib/postgresql/data
+
+volumes:
+  diopmotors-db:

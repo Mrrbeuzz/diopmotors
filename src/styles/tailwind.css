@@ -1,0 +1,204 @@
+/*
+ * Design de Diop Motors (Tailwind CSS v4).
+ * Ce fichier est compilé en public/css/tailwind.css avec : npm run build:css
+ * (le fichier compilé est déjà fourni : vous n'avez à recompiler que si vous changez le design).
+ */
+@import "tailwindcss" source(none);
+@source "../views";
+@source "../../public/js";
+
+@theme {
+  --font-display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* Encre (bleu nuit) */
+  --color-ink-50: #f5f7fa;
+  --color-ink-100: #e9eef3;
+  --color-ink-200: #d3dce5;
+  --color-ink-300: #a3b1c0;
+  --color-ink-400: #7a8ca0;
+  --color-ink-500: #5b6f84;
+  --color-ink-600: #425468;
+  --color-ink-700: #2b3a4b;
+  --color-ink-800: #1b2634;
+  --color-ink-900: #121a24;
+  --color-ink-950: #0a0f15;
+  /* Jaune plaque d'immatriculation */
+  --color-plate-300: #ffdc57;
+  --color-plate-400: #f5c518;
+  --color-plate-500: #dca900;
+  --color-plate-600: #9a7600;
+  /* WhatsApp */
+  --color-wa-500: #26b061;
+  --color-wa-600: #1b8c4a;
+  --color-wa-700: #146c39;
+  --color-danger-600: #c0362c;
+  --color-danger-50: #fdf1ef;
+
+  --shadow-lift: 0 18px 40px -18px rgb(10 15 21 / .45);
+
+  --animate-fade-up: fade-up .8s cubic-bezier(.2, .7, .2, 1) both;
+  --animate-fade-in: fade-in .6s ease-out both;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-road: road .9s linear infinite;
+  --animate-wheel: wheel 1s linear infinite;
+  --animate-ride: ride 1.6s ease-in-out infinite;
+  --animate-speed: speed 1.4s linear infinite;
+  --animate-ping-soft: ping-soft 2.6s cubic-bezier(0, 0, .2, 1) infinite;
+  --animate-pop: pop .45s cubic-bezier(.3, 1.6, .5, 1);
+  --animate-shine: shine 3.2s ease-in-out infinite;
+
+  @keyframes fade-up { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+  @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes float { 0%, 100% { transform: translate3d(0, 0, 0); } 50% { transform: translate3d(0, -18px, 0); } }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes road { from { background-position-x: 0; } to { background-position-x: -64px; } }
+  @keyframes wheel { to { transform: rotate(360deg); } }
+  @keyframes ride { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-3px) rotate(-.4deg); } }
+  @keyframes speed { 0% { transform: translateX(40px); opacity: 0; } 30% { opacity: .8; } 100% { transform: translateX(-70px); opacity: 0; } }
+  @keyframes ping-soft { 0% { transform: scale(1); opacity: .55; } 80%, 100% { transform: scale(1.9); opacity: 0; } }
+  @keyframes pop { 0% { transform: scale(1); } 40% { transform: scale(1.35); } 100% { transform: scale(1); } }
+  @keyframes shine { 0%, 55% { transform: translateX(-120%) skewX(-18deg); } 100% { transform: translateX(260%) skewX(-18deg); } }
+}
+
+@layer base {
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { @apply min-h-screen bg-ink-50 font-sans text-base/relaxed text-ink-800 antialiased; }
+  h1, h2, h3, h4 { @apply font-display uppercase tracking-tight text-ink-950; text-wrap: balance; }
+  img { @apply max-w-full; }
+  :focus-visible { @apply outline-2 outline-offset-2 outline-plate-500; }
+  ::selection { @apply bg-plate-400 text-ink-950; }
+  [hidden] { display: none !important; }
+}
+
+@layer components {
+  .container-x { @apply mx-auto w-full max-w-6xl px-4 sm:px-6; }
+  .section { @apply py-12 sm:py-16; }
+
+  /* ---- Boutons ---- */
+  .btn {
+    @apply relative inline-flex cursor-pointer select-none items-center justify-center gap-2 overflow-hidden rounded-xl bg-ink-900 px-5 py-3 text-center text-base font-semibold text-white shadow-sm transition duration-200 ease-out;
+    @apply hover:-translate-y-0.5 hover:bg-ink-700 hover:shadow-lg active:translate-y-0 active:scale-[.98];
+  }
+  .btn-plate { @apply bg-plate-400 text-ink-950 hover:bg-plate-300; }
+  .btn-wa { @apply bg-wa-600 text-white hover:bg-wa-500; }
+  .btn-ghost { @apply bg-white text-ink-900 shadow-none ring-1 ring-inset ring-ink-200 hover:bg-ink-50; }
+  .btn-ghost-dark { @apply bg-white/10 text-white shadow-none ring-1 ring-inset ring-white/25 hover:bg-white/20; }
+  .btn-danger { @apply bg-white text-danger-600 shadow-none ring-1 ring-inset ring-danger-600/30 hover:bg-danger-600 hover:text-white; }
+  .btn-sm { @apply rounded-lg px-3.5 py-2 text-sm; }
+  .btn-lg { @apply px-7 py-3.5 text-lg; }
+  .btn-block { @apply w-full; }
+  /* reflet qui traverse le bouton principal */
+  .btn-shine::after { content: ""; display: none; }
+  @media (prefers-reduced-motion: no-preference) {
+    .btn-shine::after { @apply pointer-events-none absolute inset-y-0 left-0 block w-1/3 animate-shine bg-white/50; }
+  }
+
+  /* ---- Plaque de prix ---- */
+  .plate {
+    @apply inline-flex items-center rounded-md bg-plate-400 px-2.5 py-1 font-display text-lg leading-none font-bold tracking-wide whitespace-nowrap text-ink-950 ring-2 ring-ink-950/85 ring-inset;
+  }
+  .plate-lg { @apply px-3.5 py-2 text-2xl sm:text-3xl; }
+  .plate-logo {
+    @apply inline-flex items-center gap-2 rounded-lg bg-plate-400 px-3 py-1.5 font-display text-xl leading-none font-extrabold tracking-wider text-ink-950 uppercase ring-2 ring-white/80 transition duration-300 hover:-rotate-1 hover:scale-[1.03];
+  }
+
+  /* ---- Cartes ---- */
+  .card { @apply rounded-2xl bg-white shadow-sm ring-1 ring-ink-100; }
+  .card-hover { @apply transition duration-300 ease-out hover:-translate-y-1.5 hover:shadow-lift hover:ring-ink-200; }
+  .ph { @apply flex h-full w-full items-center justify-center bg-linear-to-br from-ink-700 to-ink-900 font-display text-6xl font-bold text-plate-400 uppercase; }
+
+  /* ---- Formulaires ---- */
+  .label { @apply mb-1.5 block text-sm font-semibold text-ink-700; }
+  .input {
+    @apply block w-full rounded-xl border border-ink-200 bg-white px-3.5 py-2.5 text-base text-ink-900 shadow-sm transition duration-200 placeholder:text-ink-300;
+    @apply focus:border-plate-500 focus:ring-4 focus:ring-plate-400/30 focus:outline-none;
+  }
+  select.input { @apply pr-9; }
+  .hint { @apply mt-1.5 text-sm text-ink-500; }
+  .check { @apply flex cursor-pointer items-start gap-3 text-sm text-ink-700; }
+  .check input { @apply mt-0.5 h-5 w-5 shrink-0 cursor-pointer rounded accent-ink-900; }
+  .file-input {
+    @apply block w-full cursor-pointer rounded-xl border-2 border-dashed border-ink-200 bg-ink-50 p-4 text-sm text-ink-600 transition duration-200 hover:border-plate-500 hover:bg-plate-400/10;
+    @apply file:mr-4 file:cursor-pointer file:rounded-lg file:border-0 file:bg-ink-900 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-ink-700;
+  }
+  .segmented { @apply grid grid-cols-2 gap-2 rounded-2xl bg-ink-100 p-1.5; }
+  .segmented label { @apply cursor-pointer; }
+  .segmented input { @apply sr-only; }
+  .segmented span {
+    @apply block rounded-xl px-4 py-3 text-center font-display text-xl font-bold tracking-wide text-ink-600 uppercase transition duration-200;
+  }
+  .segmented input:checked + span { @apply bg-plate-400 text-ink-950 shadow; }
+  .segmented input:focus-visible + span { @apply outline-2 outline-offset-2 outline-plate-500; }
+
+  /* ---- Messages ---- */
+  .notice { @apply rounded-2xl border border-ink-200 bg-white p-4 text-sm text-ink-700; }
+  .notice ul { @apply mt-2 list-disc space-y-1 pl-5; }
+  .notice-error { @apply border-danger-600/30 bg-danger-50 text-danger-600; }
+  .notice-tip { @apply border-plate-500/40 bg-plate-400/10; }
+  .flash { @apply rounded-xl px-4 py-3 text-sm font-semibold ring-1 ring-inset; }
+  .flash-ok { @apply bg-wa-600/10 text-wa-700 ring-wa-600/30; }
+  .flash-info { @apply bg-ink-100 text-ink-700 ring-ink-200; }
+
+  /* ---- Onglets et pastilles ---- */
+  .tabs { @apply flex flex-wrap gap-2; }
+  .tabs a {
+    @apply rounded-full px-4 py-2 text-sm font-semibold text-ink-600 ring-1 ring-ink-200 transition duration-200 ring-inset hover:bg-ink-100;
+    @apply aria-[current=page]:bg-ink-900 aria-[current=page]:text-white aria-[current=page]:ring-ink-900;
+  }
+  .chip { @apply inline-flex items-center rounded-full bg-ink-950/80 px-3 py-1 text-xs font-bold tracking-wider text-white uppercase backdrop-blur; }
+
+  /* ---- Navigation ---- */
+  .site-header { @apply sticky top-0 z-40 bg-ink-950/90 text-white backdrop-blur-md transition-shadow duration-300; }
+  .site-header.is-scrolled { @apply shadow-lg shadow-black/25; }
+  .nav-link {
+    @apply relative px-1 py-2 text-sm font-semibold text-ink-200 transition-colors duration-200 hover:text-white;
+    @apply after:absolute after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-plate-400 after:transition after:duration-300 hover:after:scale-x-100;
+    @apply aria-[current=page]:text-white aria-[current=page]:after:scale-x-100;
+  }
+  .cart-link { @apply inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-white ring-1 ring-inset ring-white/20 transition duration-200 hover:bg-white/10; }
+  .cart-count { @apply inline-flex h-6 min-w-6 items-center justify-center rounded-full bg-plate-400 px-1.5 text-xs font-bold text-ink-950; }
+  .cart-count.is-empty { @apply bg-white/20 text-white; }
+  .cart-count.bump { @apply animate-pop; }
+  .mobile-menu { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s ease; }
+  .mobile-menu.open { grid-template-rows: 1fr; }
+  .mobile-menu > div { overflow: hidden; visibility: hidden; transition: visibility 0s .35s; }
+  .mobile-menu.open > div { visibility: visible; transition-delay: 0s; }
+
+  /* ---- Pied de page ---- */
+  .foot-link { @apply block py-1 text-ink-300 transition duration-200 hover:translate-x-1 hover:text-plate-400; }
+
+  /* ---- Mouvement ---- */
+  .js .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s cubic-bezier(.2, .7, .2, 1), transform .7s cubic-bezier(.2, .7, .2, 1); }
+  .js .reveal.is-in { opacity: 1; transform: none; }
+  .accent-bar { @apply mt-3 block h-1.5 w-16 origin-left rounded-full bg-plate-400; }
+  .js .reveal .accent-bar { transform: scaleX(0); transition: transform .8s .25s cubic-bezier(.2, .7, .2, 1); }
+  .js .reveal.is-in .accent-bar { transform: scaleX(1); }
+  .toast {
+    @apply pointer-events-none fixed bottom-6 left-1/2 z-50 rounded-xl bg-ink-950 px-5 py-3 text-sm font-semibold text-white opacity-0 shadow-xl;
+    transform: translate(-50%, calc(100% + 3rem));
+    transition: transform .45s cubic-bezier(.3, 1.4, .5, 1), opacity .3s;
+  }
+  .toast:empty { display: none; }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  .previews li { @apply relative aspect-square overflow-hidden rounded-xl ring-1 ring-ink-200 motion-safe:animate-fade-in; }
+  .previews li:first-child::after {
+    content: "Couverture"; @apply absolute inset-x-0 bottom-0 bg-ink-950/75 py-1 text-center text-xs font-semibold text-white;
+  }
+  .previews img { @apply h-full w-full object-cover; }
+}
+
+/* Le texte des descriptions garde les retours à la ligne saisis par les vendeurs. */
+.prose-x { white-space: pre-line; overflow-wrap: anywhere; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+  .js .reveal { opacity: 1; transform: none; }
+}
